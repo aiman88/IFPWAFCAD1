@@ -1,5 +1,19 @@
+<%-- 
+    Document   : response
+    Created on : Sep 18, 2019, 3:22:24 PM
+    Author     : aiman
+--%>
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+<%@taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
+
+<sql:query var="subjects" dataSource="jdbc/MySQLDataSource">
+
+    SELECT subject_id as id, name FROM mynewdatabase.Subject
+
+</sql:query>
 <!DOCTYPE html>
 <!--
 To change this license header, choose License Headers in Project Properties.
@@ -26,10 +40,13 @@ and open the template in the editor.
                     <td>To view the contact details of an IFPWAFCAD certified former professional wrestler in your area, select a subject below:</td>
                 </tr>
                 <tr>
-                    <td><form action="response.jsp"><strong>Select a subject:</strong><select name="subject_id">
-                                <option></option>
-                                <option></option>
-                            </select><input type="submit" value="submit" name="submit" />
+                    <td><form action="response.jsp"><strong>Select a subject:</strong>
+                             <select name="subject_id">
+                            <c:forEach var="subject" items="${subjects.rows}">
+                               <option value="${subject.id}">${subject.name}</option>
+                            </c:forEach>
+                            </select>
+                            <input type="submit" value="submit" name="submit" />
                         </form></td>
                 </tr>
             </tbody>
